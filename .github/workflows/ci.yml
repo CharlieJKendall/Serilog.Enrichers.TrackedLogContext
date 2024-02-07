@@ -14,7 +14,9 @@ jobs:
     strategy:
       matrix:
         dotnet-version: [ '3.1.x', '5.0.x', '6.0.x', '7.0.x', '8.0.x']
-
+    defaults:
+      run:
+        working-directory: ./src
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
