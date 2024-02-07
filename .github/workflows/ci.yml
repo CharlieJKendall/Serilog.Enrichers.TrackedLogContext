@@ -27,7 +27,7 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
           
       - name: Restore dependencies
-        run: dotnet restore ./src
+        run: dotnet restore
         
       - name: Build projects
         run: dotnet build --configuration Release --no-restore
