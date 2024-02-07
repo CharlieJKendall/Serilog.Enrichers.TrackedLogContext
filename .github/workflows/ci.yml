@@ -13,7 +13,7 @@ jobs:
     runs-on: [ ubuntu-latest ]
     strategy:
       matrix:
-        dotnet-version: [ '3.1.x', '5.0.x', '6.0.x', '7.0.x', '8.0.x']
+        dotnet-version: [ { version: '3.1.x', framework: 'netcoreapp3.1' }, { version: '5.0.x', 'net5.0' }, { version: '6.0.x', framework: 'net6.0' }, { version: '7.0.x', framework: 'net7.0' }, { version: '8.0.x', framework: 'net8.0' } ]
     defaults:
       run:
         working-directory: ./src
@@ -21,16 +21,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         
-      - name: Setup dotnet ${{ matrix.dotnet-version }}
+      - name: Setup dotnet ${{ matrix.dotnet-version.version }}
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: ${{ matrix.dotnet-version.version }}
           
       - name: Restore dependencies
         run: dotnet restore
         
       - name: Build projects
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore --framework ${{ matrix.dotnet-version.framework }}
         
       - name: Run tests
-        run: dotnet test --configuration Release --no-build
+        run: dotnet test --configuration Release --no-build --framework ${{ matrix.dotnet-version.framework }}
