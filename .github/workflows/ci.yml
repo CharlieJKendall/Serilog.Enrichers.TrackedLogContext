@@ -34,12 +34,3 @@ jobs:
         
       - name: Run tests
         run: dotnet test --configuration Release --no-build --framework ${{ matrix.dotnet-version.framework }}
-
-      - name: Create NuGet package
-        run: dotnet pack --configuration Release --no-build --output .
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Serilog.Enrichers.RequestLogContext.nupkg
-          path: Serilog.Enrichers.RequestLogContext*.nupkg
