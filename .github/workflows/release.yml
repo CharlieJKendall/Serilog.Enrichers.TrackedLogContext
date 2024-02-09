@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  release:
+
+jobs:
+  build:
+    runs-on: [ ubuntu-latest ]
+    defaults:
+      run:
+        working-directory: ./src
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: |
+            3.1.x
+            5.0.x
+            6.0.x
+            7.0.x
+            8.0.x
+          
+      - name: Restore dependencies
+        run: dotnet restore
+        
+      - name: Build projects
+        run: dotnet build --configuration Release --no-restore
+        
+      - name: Run tests
+        run: dotnet test --configuration Release --no-build
+
+      - name: Create NuGet package
+        run: dotnet pack --configuration Release --no-build --output .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Serilog.Enrichers.RequestLogContext.nupkg
+          path: Serilog.Enrichers.RequestLogContext*.nupkg
