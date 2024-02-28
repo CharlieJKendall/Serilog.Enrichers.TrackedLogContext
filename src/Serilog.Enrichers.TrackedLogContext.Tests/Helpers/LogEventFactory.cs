@@ -2,7 +2,7 @@
 using Serilog.Parsing;
 using System;
 
-namespace Serilog.Enrichers.RequestLogContext.Tests.Helpers
+namespace Serilog.Enrichers.TrackedLogContext.Tests.Helpers
 {
     internal static class LogEventFactory
     {

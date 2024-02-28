@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Serilog.Enrichers.TrackedLogContext</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Charlie Kendall</Authors>
+    <Description>A Serilog enricher for enriching all logs for an async scope.</Description>
+    <Copyright>Copyright 2024 Charlie Kendall - Provided under the Apache License, Version 2.0</Copyright>
+    <PackageTags>serilog;enricher;enrichers;trackedlogcontext;tracked-log-context;trackedcontext;tracked-context;logcontext;log-context;serilog-enricher;</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIcon>assets\icon.png</PackageIcon>
+    <PackageIconUrl>https://raw.githubusercontent.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/main/assets/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/releases</PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Serilog.Enrichers.TrackedLogContext.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.12.0" />
+  </ItemGroup>
+
+</Project>

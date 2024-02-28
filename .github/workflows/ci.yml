@@ -30,7 +30,7 @@ jobs:
         run: dotnet restore
         
       - name: Build projects
-        run: dotnet build --configuration Release --no-restore --framework ${{ matrix.dotnet-version.framework }}
+        run: dotnet build --configuration Release --no-restore
         
       - name: Run tests
         run: dotnet test --configuration Release --no-build --framework ${{ matrix.dotnet-version.framework }}

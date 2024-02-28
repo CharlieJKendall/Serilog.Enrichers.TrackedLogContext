@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Serilog.Enrichers.RequestLogContext\Serilog.Enrichers.RequestLogContext.csproj" />
+    <ProjectReference Include="..\Serilog.Enrichers.TrackedLogContext.AspNetCore\Serilog.Enrichers.TrackedLogContext.AspNetCore.csproj" />
   </ItemGroup>
 
 </Project>
