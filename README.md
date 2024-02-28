@@ -1,5 +1,5 @@
 # Serilog.Enrichers.TrackedLogContext 🌟
-
+[![CI](https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/actions/workflows/ci.yml)
 ### Why do I need this?
 
 It is not uncommon for useful information to become available further down the call stack than the logs that would benefit from being enriched with it. A common example of this is exception handling middleware - we might want an error log to be enriched with information about the particular resource that was being requested:
