@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using Serilog.Enrichers.RequestLogContext.Tests.Helpers;
+using Serilog.Enrichers.TrackedLogContext.Tests.Helpers;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -7,19 +7,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Serilog.Enrichers.RequestLogContext.Tests
+namespace Serilog.Enrichers.TrackedLogContext.Tests
 {
-    public abstract class RequestLogContextEnricherTests
+    public abstract class TrackedLogContextEnricherTests
     {
-        private RequestLogContextEnricher _sut;
+        private TrackedLogContextEnricher _sut;
 
         [SetUp]
         public void Setup()
         {
-            _sut = new RequestLogContextEnricher();
+            _sut = new TrackedLogContextEnricher();
         }
 
-        class Enrich : RequestLogContextEnricherTests
+        class Enrich : TrackedLogContextEnricherTests
         {
             [Test]
             public void Throws_when_log_event_null()
@@ -50,9 +50,9 @@ namespace Serilog.Enrichers.RequestLogContext.Tests
                 var logEvent = LogEventFactory.CreateEmpty();
                 var propertyFactory = new ScalarLogEventPropertyFactory();
 
-                RequestLogContextEnricher.Initialise();
-                RequestLogContextEnricher.PushProperty("property-name", "property-value");
-                RequestLogContextEnricher.CleanUp();
+                Serilog.TrackedLogContext.Initialise();
+                Serilog.TrackedLogContext.PushProperty("property-name", "property-value");
+                Serilog.TrackedLogContext.CleanUp();
 
                 // Act
                 _sut.Enrich(logEvent, propertyFactory);
@@ -71,8 +71,8 @@ namespace Serilog.Enrichers.RequestLogContext.Tests
                 var logEvent = LogEventFactory.CreateWithScalarValue(name, firstValue);
                 var propertyFactory = new ScalarLogEventPropertyFactory();
 
-                RequestLogContextEnricher.Initialise();
-                RequestLogContextEnricher.PushProperty(name, secondValue);
+                Serilog.TrackedLogContext.Initialise();
+                Serilog.TrackedLogContext.PushProperty(name, secondValue);
 
                 // Act
                 _sut.Enrich(logEvent, propertyFactory);
@@ -99,10 +99,10 @@ namespace Serilog.Enrichers.RequestLogContext.Tests
                 using var mres1 = new ManualResetEventSlim();
                 using var mres2 = new ManualResetEventSlim();
 
-                RequestLogContextEnricher.Initialise();
+                Serilog.TrackedLogContext.Initialise();
 
                 // Act
-                Serilog.RequestLogContext.PushProperty("one", 1);
+                Serilog.TrackedLogContext.PushProperty("one", 1);
                 _sut.Enrich(logEvent1, factory);
 
                 _ = Task.Run(() =>
@@ -110,78 +110,78 @@ namespace Serilog.Enrichers.RequestLogContext.Tests
                     mres1.Wait();
 
                     _sut.Enrich(logEvent2, factory);
-                    Serilog.RequestLogContext.PushProperty("two", 2);
+                    Serilog.TrackedLogContext.PushProperty("two", 2);
                     _sut.Enrich(logEvent3, factory);
 
                     mres2.Set();
                 });
 
                 _sut.Enrich(logEvent4, factory);
-                Serilog.RequestLogContext.PushProperty("three", 3);
+                Serilog.TrackedLogContext.PushProperty("three", 3);
 
                 mres1.Set();
                 mres2.Wait();
 
                 _sut.Enrich(logEvent5, factory);
 
-                RequestLogContextEnricher.CleanUp();
+                Serilog.TrackedLogContext.CleanUp();
 
                 // Assert
                 Assert.That(logEvent1.Properties, Has.Count.EqualTo(1));
-                _AssertProperty(logEvent1.Properties, "one", 1);
+                AssertProperty(logEvent1.Properties, "one", 1);
 
                 Assert.That(logEvent2.Properties, Has.Count.EqualTo(2));
-                _AssertProperty(logEvent2.Properties, "one", 1);
-                _AssertProperty(logEvent2.Properties, "three", 3);
+                AssertProperty(logEvent2.Properties, "one", 1);
+                AssertProperty(logEvent2.Properties, "three", 3);
 
                 Assert.That(logEvent3.Properties, Has.Count.EqualTo(3));
-                _AssertProperty(logEvent3.Properties, "one", 1);
-                _AssertProperty(logEvent3.Properties, "two", 2);
-                _AssertProperty(logEvent3.Properties, "three", 3);
+                AssertProperty(logEvent3.Properties, "one", 1);
+                AssertProperty(logEvent3.Properties, "two", 2);
+                AssertProperty(logEvent3.Properties, "three", 3);
 
                 Assert.That(logEvent4.Properties, Has.Count.EqualTo(1));
-                _AssertProperty(logEvent4.Properties, "one", 1);
+                AssertProperty(logEvent4.Properties, "one", 1);
 
                 Assert.That(logEvent5.Properties, Has.Count.EqualTo(3));
-                _AssertProperty(logEvent5.Properties, "one", 1);
-                _AssertProperty(logEvent5.Properties, "two", 2);
-                _AssertProperty(logEvent5.Properties, "three", 3);
+                AssertProperty(logEvent5.Properties, "one", 1);
+                AssertProperty(logEvent5.Properties, "two", 2);
+                AssertProperty(logEvent5.Properties, "three", 3);
             }
 
-            private static void _AssertProperty(IReadOnlyDictionary<string, LogEventPropertyValue> properties, string key, int value)
+            private static void AssertProperty(IReadOnlyDictionary<string, LogEventPropertyValue> properties, string key, int value)
             {
                 Assert.That(properties[key], Is.TypeOf<ScalarValue>());
                 Assert.That(((ScalarValue)properties[key]).Value, Is.EqualTo(value));
             }
         }
 
-        class PushProperty : RequestLogContextEnricherTests
+        class PushProperty : TrackedLogContextEnricherTests
         {
             [Test]
             public void Name_is_null_throws()
             {
-                var exception = Assert.Throws<ArgumentNullException>(() => RequestLogContextEnricher.PushProperty(null!, null));
+                var exception = Assert.Throws<ArgumentNullException>(() => Serilog.TrackedLogContext.PushProperty(null!, null));
                 Assert.That(exception.ParamName, Is.EqualTo("name"));
             }
             
             [Test]
             public void Tracker_has_not_been_initialized_throws()
             {
-                Assert.Throws<InvalidOperationException>(() => RequestLogContextEnricher.PushProperty("valid", null));
+                Assert.Throws<InvalidOperationException>(() => Serilog.TrackedLogContext.PushProperty("valid", null));
             }
 
             [Test]
             public void Tracker_has_been_cleaned_up_throws()
             {
                 // Arrange
-                TestDelegate pushProperty = () => RequestLogContextEnricher.PushProperty("valid", null);
+                TestDelegate pushProperty = () => Serilog.TrackedLogContext.PushProperty("valid", null);
 
-                RequestLogContextEnricher.Initialise();
+                Serilog.TrackedLogContext.Initialise();
 
                 // Act / Assert
                 Assert.DoesNotThrow(pushProperty);
 
-                RequestLogContextEnricher.CleanUp();
+                Serilog.TrackedLogContext.CleanUp();
                 Assert.Throws<InvalidOperationException>(pushProperty);
             }
 
@@ -192,17 +192,21 @@ namespace Serilog.Enrichers.RequestLogContext.Tests
                 var name = "property-name";
                 var value = "property-value";
 
-                RequestLogContextEnricher.Initialise();
+                Serilog.TrackedLogContext.Initialise();
 
                 // Act
-                RequestLogContextEnricher.PushProperty(name, value);
+                Serilog.TrackedLogContext.PushProperty(name, value);
 
                 // Assert
-                Assert.That(RequestLogContextEnricher.TrackedProperties.Value, Has.Count.EqualTo(1));
-                Assert.That(RequestLogContextEnricher.TrackedProperties.Value.First().Name, Is.EqualTo(name));
-                Assert.That(RequestLogContextEnricher.TrackedProperties.Value.First().Value, Is.EqualTo(value));
+                var property = Serilog.TrackedLogContext.GetTrackedProperties().Single();
+                
+                Assert.Multiple(() =>
+                {
+                    Assert.That(property.Name, Is.EqualTo(name));
+                    Assert.That(property.Value, Is.EqualTo(value));
+                });
             }
-            
+
             [TestCase("")]
             [TestCase(" ")]
             [TestCase("\r")]
@@ -210,7 +214,7 @@ namespace Serilog.Enrichers.RequestLogContext.Tests
             [TestCase("\t")]
             public void Name_is_white_space_throws(string name)
             {
-                var exception = Assert.Throws<ArgumentException>(() => RequestLogContextEnricher.PushProperty(name, null));
+                var exception = Assert.Throws<ArgumentException>(() => Serilog.TrackedLogContext.PushProperty(name, null));
                 Assert.That(exception.ParamName, Is.EqualTo("name"));
             }
         }

@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace Serilog.Enrichers.RequestLogContext.Tests.Helpers
+namespace Serilog.Enrichers.TrackedLogContext.Tests.Helpers
 {
     internal class ScalarLogEventPropertyFactory : ILogEventPropertyFactory
     {

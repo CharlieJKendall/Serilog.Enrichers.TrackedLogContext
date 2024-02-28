@@ -1,20 +1,20 @@
 using NUnit.Framework;
-using System;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
+using System;
 
-namespace Serilog.Enrichers.RequestLogContext.Tests
+namespace Serilog.Enrichers.TrackedLogContext.AspNetCore.Tests
 {
-    public class RequestLogContextMiddlewareTests
+    public class TrackedLogContextMiddlewareTests
     {
-        private RequestLogContextMiddleware _sut;
+        private TrackedLogContextMiddleware _sut;
 
         [SetUp]
         public void Setup()
         {
-            _sut = new RequestLogContextMiddleware();
+            _sut = new TrackedLogContextMiddleware();
         }
-    
+
         [Test]
         public async Task Garbage_collects_when_execution_context_ends()
         {
@@ -22,7 +22,7 @@ namespace Serilog.Enrichers.RequestLogContext.Tests
 
             await _sut.InvokeAsync(null!, _ =>
             {
-                weakReference = new WeakReference(RequestLogContextEnricher.TrackedProperties.Value);
+                weakReference = new WeakReference(Serilog.TrackedLogContext.GetTrackedProperties());
                 Assert.That(weakReference.IsAlive, Is.True);
                 return Task.CompletedTask;
             });
@@ -31,7 +31,7 @@ namespace Serilog.Enrichers.RequestLogContext.Tests
 
             Assert.That(weakReference.IsAlive, Is.False);
         }
-    
+
         [Test]
         public async Task Execution_context_captured_garbage_collects_when_inner_context_ends()
         {
@@ -43,7 +43,7 @@ namespace Serilog.Enrichers.RequestLogContext.Tests
             {
                 _ = Task.Run(() =>
                 {
-                    weakReference = new WeakReference(RequestLogContextEnricher.TrackedProperties.Value);
+                    weakReference = new WeakReference(Serilog.TrackedLogContext.GetTrackedProperties());
                     Assert.That(weakReference.IsAlive, Is.True);
 
                     mres1.Set();
