@@ -51,7 +51,7 @@ namespace Serilog
 
         /// <summary>
         /// Push a property and value onto the <see cref="TrackedLogContext"/> so that all
-        /// subsequent logs emitted during the scope of this request are enriched with it
+        /// subsequent logs emitted during the async scope are enriched with it
         /// </summary>
         /// 
         /// <param name="name">The name of the property</param>

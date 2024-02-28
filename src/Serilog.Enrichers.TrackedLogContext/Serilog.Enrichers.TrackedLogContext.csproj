@@ -16,11 +16,11 @@
     <PackageTags>serilog;enricher;enrichers;trackedlogcontext;tracked-log-context;trackedcontext;tracked-context;logcontext;log-context;serilog-enricher;</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>assets\icon.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/CharlieJKendall/Serilog.Enrichers.RequestLogContext/main/assets/icon.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.RequestLogContext</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/CharlieJKendall/Serilog.Enrichers.RequestLogContext/releases</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/main/assets/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/releases</PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.RequestLogContext</RepositoryUrl>
+    <RepositoryUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

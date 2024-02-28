@@ -1,15 +1,20 @@
-# Serilog.Enrichers.RequestLogContext
+# Serilog.Enrichers.TrackedLogContext 🌟
 
 ### Why do I need this?
 
-It is not uncommon for useful debugging information to become available further down the request pipeline than the logs that would benefit from being enriched with it. An example would be exception handling middleware:
+It is not uncommon for useful information to become available further down the call stack than the logs that would benefit from being enriched with it. A common example of this is exception handling middleware - we might want an error log to be enriched with information about the particular resource that was being requested:
 
 ``` cs
-app.Use(async (context, requestDelegate) =>
+// Setup logger to enrich from TrackedLogContext
+Log.Logger = new LoggerConfiguration()
+    .Enrich.FromTrackedLogContext()
+    .CreateLogger();
+
+app.Use(async (context, next) =>
 {
     try
     {
-        await requestDelegate(context);
+        await next(context);
     }
     catch (Exception ex)
     {
@@ -19,51 +24,10 @@ app.Use(async (context, requestDelegate) =>
 
 app.MapGet("/todos/{id}", (string id) =>
 {
+    // Push TodoId onto the TrackedLogContext
     RequestLogContext.PushProperty("TodoId", id);
     throw new Exception("Oops");
 });
 ```
 
-The above is a pretty contrived example, however the point still stands: it can be very valuable to ensure all further logs emitted from within the scope of a request are enriched with certain pieces of data.
-
-### Usage ideas and examples
-
-#### Common header values
-
-``` cs
-app.Use(async (context, requestDelegate) =>
-{
-    if (context.Request.Headers.TryGetValue("SessionId", out var sessionId))
-    {
-        RequestLogContext.PushProperty("SessionId", sessionId.ToString());
-    }
-
-    await requestDelegate(context);
-});
-```
-
-### User information
-
-``` cs
-app.Use(async (context, requestDelegate) =>
-{
-    if (context.User.FindFirst(ClaimTypes.NameIdentifier) is Claim nameIdentifier)
-    {
-        RequestLogContext.PushProperty("UserId", nameIdentifier.Value);
-    }
-
-    await requestDelegate(context);
-});
-```
-
-### Data retrieved from a downstream provider (e.g. database, REST API)
-
-``` cs
-public async Task<Item> GetItemDetails(string itemId)
-{
-    var client = _httpClientFactory.CreateClient();
-    var itemDetails = await client.GetFromJsonAsync<Item>($"api/item-details/{itemId}");
-    RequestLogContext.PushProperty("ItemOrderId", itemDetails.OrderId);
-    return itemDetails;
-}
-```
+The above is a slightly contrived example, however the point still stands: it can be valuable to ensure all further logs emitted from within the scope of a request are enriched with certain pieces of data. Think of it like `LogContext.PushProperty`, but for the scope of the entire request instead of the `IDisposable` lifetime 💅

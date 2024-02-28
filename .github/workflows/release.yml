@@ -42,5 +42,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Serilog.Enrichers.RequestLogContext.nupkg
-          path: Serilog.Enrichers.RequestLogContext*.nupkg
+          name: Serilog.Enrichers.TrackedLogContext.nupkg
+          path: Serilog.Enrichers.TrackedLogContext*.nupkg
