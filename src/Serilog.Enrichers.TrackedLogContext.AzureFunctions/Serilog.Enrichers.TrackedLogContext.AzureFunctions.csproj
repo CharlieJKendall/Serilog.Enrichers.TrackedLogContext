@@ -4,7 +4,24 @@
     <TargetFrameworks>netcoreapp3.1;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+  
+  <PropertyGroup>
+    <PackageId>Serilog.Enrichers.TrackedLogContext.AzureFunctions</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Charlie Kendall</Authors>
+    <Description>A Serilog enricher for enriching all logs within the scope of Azure Functions.</Description>
+    <Copyright>Copyright 2024 Charlie Kendall - Provided under the Apache License, Version 2.0</Copyright>
+    <PackageTags>serilog;enricher;enrichers;trackedlogcontext;tracked-log-context;trackedcontext;tracked-context;logcontext;log-context;serilog-enricher;azure;azure-functions;functions;</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl>https://raw.githubusercontent.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/main/assets/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/releases</PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</RepositoryUrl>
+  </PropertyGroup>
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Core" Version="1.6.0" />
   </ItemGroup>
@@ -14,7 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Serilog.Enrichers.TrackedLogContext\Serilog.Enrichers.TrackedLogContext.csproj" />
+    <None Include="..\..\assets\icon.png" Link="icon.png" Pack="true" PackagePath="\" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog.Enrichers.TrackedLogContext" Version="0.0.1" />
   </ItemGroup>
 
 </Project>

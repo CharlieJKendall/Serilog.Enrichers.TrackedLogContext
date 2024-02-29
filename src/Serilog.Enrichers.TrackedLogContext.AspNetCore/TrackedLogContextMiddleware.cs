@@ -3,14 +3,21 @@ using System.Threading.Tasks;
 
 namespace Serilog
 {
-    internal class TrackedLogContextMiddleware : IMiddleware
+    internal class TrackedLogContextMiddleware
     {
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        private readonly RequestDelegate _next;
+
+        public TrackedLogContextMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
                 TrackedLogContext.Initialise();
-                await next(context);
+                await _next(context);
             }
             finally
             {
