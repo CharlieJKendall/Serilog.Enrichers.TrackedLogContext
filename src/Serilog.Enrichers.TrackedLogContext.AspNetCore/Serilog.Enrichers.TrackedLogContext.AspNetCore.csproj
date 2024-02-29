@@ -5,15 +5,37 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>Serilog.Enrichers.TrackedLogContext.AspNetCore</PackageId>
+    <Version>0.0.3</Version>
+    <Authors>Charlie Kendall</Authors>
+    <Description>A Serilog enricher for enriching all logs within the scope of an HTTP request.</Description>
+    <Copyright>Copyright 2024 Charlie Kendall - Provided under the Apache License, Version 2.0</Copyright>
+    <PackageTags>serilog;enricher;enrichers;trackedlogcontext;tracked-log-context;trackedcontext;tracked-context;logcontext;log-context;serilog-enricher;asp;aspnet;aspnetcore;</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl>https://raw.githubusercontent.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/main/assets/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/releases</PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</RepositoryUrl>
+  </PropertyGroup>
+
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Serilog.Enrichers.TrackedLogContext\Serilog.Enrichers.TrackedLogContext.csproj" />
+    <InternalsVisibleTo Include="Serilog.Enrichers.TrackedLogContext.AspNetCore.Tests" />
   </ItemGroup>
   
   <ItemGroup>
-    <InternalsVisibleTo Include="Serilog.Enrichers.TrackedLogContext.AspNetCore.Tests" />
+    <None Include="..\..\assets\icon.png" Link="icon.png" Pack="true" PackagePath="\" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Serilog.Enrichers.TrackedLogContext" Version="0.0.1" />
   </ItemGroup>
 </Project>

@@ -9,19 +9,25 @@
 
   <PropertyGroup>
     <PackageId>Serilog.Enrichers.TrackedLogContext</PackageId>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Authors>Charlie Kendall</Authors>
-    <Description>A Serilog enricher for enriching all logs for an async scope.</Description>
+    <Description>A Serilog enricher for enriching all logs within an async scope.</Description>
     <Copyright>Copyright 2024 Charlie Kendall - Provided under the Apache License, Version 2.0</Copyright>
     <PackageTags>serilog;enricher;enrichers;trackedlogcontext;tracked-log-context;trackedcontext;tracked-context;logcontext;log-context;serilog-enricher;</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageIcon>assets\icon.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/main/assets/icon.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext/releases</PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/CharlieJKendall/Serilog.Enrichers.TrackedLogContext</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\assets\icon.png" Link="icon.png" Pack="true" PackagePath="\" />
+    <None Include="README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="Serilog.Enrichers.TrackedLogContext.Tests" />
