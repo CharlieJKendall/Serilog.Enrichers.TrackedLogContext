@@ -119,4 +119,4 @@ The above is slightly contrived, however the point still stands: it can be valua
 
 ## Samples
 
-[samples](There are some minimal code samples for Azure Functions and Web API projects in the repository here).
+There are some minimal code samples for Azure Functions and Web API projects in the repository [here](samples)
